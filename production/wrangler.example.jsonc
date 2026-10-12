@@ -1,0 +1,32 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "bridgestar-contract-workspace",
+  "pages_build_output_dir": "../dist-pages",
+  "compatibility_date": "2026-09-14",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "bridgestar-contracts-production",
+      "database_id": "REPLACE_WITH_DATABASE_ID",
+      "migrations_dir": "../migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "DOCUMENTS",
+      "bucket_name": "bridgestar-contracts-documents"
+    }
+  ],
+  "vars": {
+    "APP_ORIGIN": "https://contracts.bridgestar.jp",
+    "ENVIRONMENT": "production",
+    "AUTH_MODE": "email",
+    "ACCESS_TEAM_DOMAIN": "",
+    "ACCESS_AUD": "",
+    "MAIL_FROM": "中高一貫ブリッジスター <no-reply@threestars-online.app>",
+    "LIVE_SEND_ENABLED": "false"
+  }
+}

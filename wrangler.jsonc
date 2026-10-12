@@ -1,0 +1,38 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "bridgestar-contracts",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-14",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "bridgestar-contracts",
+      "database_id": "00000000-0000-0000-0000-000000000001",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "r2_buckets": [
+    { "binding": "DOCUMENTS", "bucket_name": "bridgestar-contracts-documents" },
+  ],
+  "send_email": [{ "name": "EMAIL" }],
+  "vars": {
+    "APP_ORIGIN": "http://127.0.0.1:8792",
+    "ENVIRONMENT": "local",
+    "ACCESS_TEAM_DOMAIN": "",
+    "ACCESS_AUD": "",
+    "MAIL_FROM": "",
+    "LIVE_SEND_ENABLED": "false",
+    "TOKEN_SECRET": "",
+  },
+  "observability": {
+    "enabled": true,
+    "logs": { "enabled": true, "invocation_logs": false },
+  },
+  "triggers": { "crons": ["*/10 * * * *"] },
+}

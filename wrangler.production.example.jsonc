@@ -1,0 +1,44 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "bridgestar-contracts-production",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-14",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "bridgestar-contracts-production",
+      "database_id": "REPLACE_WITH_DATABASE_ID",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "r2_buckets": [
+    {
+      "binding": "DOCUMENTS",
+      "bucket_name": "bridgestar-contracts-production-documents",
+    },
+  ],
+  "send_email": [{ "name": "EMAIL" }],
+  "vars": {
+    "ENVIRONMENT": "production",
+    "APP_ORIGIN": "https://REPLACE_WITH_DOMAIN",
+    "ACCESS_TEAM_DOMAIN": "REPLACE_WITH_TEAM.cloudflareaccess.com",
+    "ACCESS_AUD": "REPLACE_WITH_AUDIENCE",
+    "MAIL_FROM": "REPLACE_WITH_SENDER",
+    "LIVE_SEND_ENABLED": "false",
+    "TOKEN_SECRET": "",
+  },
+  "routes": [{ "pattern": "REPLACE_WITH_DOMAIN", "custom_domain": true }],
+  "observability": {
+    "enabled": true,
+    "logs": { "enabled": true, "invocation_logs": false },
+  },
+  "triggers": { "crons": ["*/10 * * * *"] },
+}

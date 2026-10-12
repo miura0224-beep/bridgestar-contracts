@@ -1,0 +1,32 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "bridgestar-contract-demo",
+  "pages_build_output_dir": "../dist-pages",
+  "compatibility_date": "2026-09-14",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "bridgestar-contract-demo",
+      "database_id": "REPLACE_WITH_DATABASE_ID",
+      "migrations_dir": "../migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "DOCUMENTS",
+      "bucket_name": "bridgestar-contract-demo-documents"
+    }
+  ],
+  "vars": {
+    "APP_ORIGIN": "https://bridgestar-contract-demo.pages.dev",
+    "ENVIRONMENT": "demo",
+    "AUTH_MODE": "email",
+    "ACCESS_TEAM_DOMAIN": "",
+    "ACCESS_AUD": "",
+    "MAIL_FROM": "",
+    "LIVE_SEND_ENABLED": "false"
+  }
+}

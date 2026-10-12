@@ -1,0 +1,17 @@
+import { readFileSync } from 'node:fs';
+import ts from 'typescript';
+const path=process.argv[2]||'production/wrangler.jsonc';
+const raw=readFileSync(path,'utf8');
+const parsed=ts.parseConfigFileTextToJson(path,raw);
+if(parsed.error) throw new Error('Invalid JSONC');
+const c=parsed.config,errors=[];
+if(/REPLACE_WITH/.test(raw)) errors.push('Replace placeholders.');
+if(c.vars?.ENVIRONMENT!=='production') errors.push('Production environment required.');
+if(c.vars?.APP_ORIGIN!=='https://contracts.bridgestar.jp') errors.push('Canonical production origin required.');
+if(c.vars?.AUTH_MODE!=='email') errors.push('Allowlisted email authentication required.');
+if(!c.vars?.MAIL_FROM?.includes('@')) errors.push('Resend sender required.');
+if(c.vars?.TOKEN_SECRET||c.vars?.RESEND_API_KEY) errors.push('Credentials must be Cloudflare secrets.');
+if(c.d1_databases?.some(d=>d.database_id?.startsWith('00000000'))) errors.push('Separate production database required.');
+if(!c.pages_build_output_dir&&(c.workers_dev!==false||c.preview_urls!==false)) errors.push('Disable scheduler HTTP domains.');
+if(errors.length) throw new Error(errors.join('\n'));
+console.log('Production configuration checks passed.');

@@ -1,0 +1,6 @@
+CREATE TABLE change_notices(id TEXT PRIMARY KEY, party_name TEXT NOT NULL, party_email TEXT NOT NULL, token_hash TEXT NOT NULL UNIQUE, status TEXT NOT NULL DEFAULT 'requested' CHECK(status IN ('requested','submitted','reviewing','completed','returned','revoked')), payload TEXT, created_by TEXT NOT NULL, created_at TEXT NOT NULL, expires_at TEXT NOT NULL, submitted_at TEXT, review_note TEXT, reviewed_by TEXT, reviewed_at TEXT, effective_date TEXT);
+ALTER TABLE sessions ADD COLUMN change_id TEXT;
+CREATE TABLE change_events(id TEXT PRIMARY KEY, notice_id TEXT NOT NULL REFERENCES change_notices(id), actor TEXT NOT NULL, action TEXT NOT NULL, detail TEXT NOT NULL, at TEXT NOT NULL);
+CREATE TRIGGER immutable_change_payload BEFORE UPDATE ON change_notices WHEN OLD.payload IS NOT NULL AND (NEW.payload IS NOT OLD.payload OR NEW.submitted_at IS NOT OLD.submitted_at OR NEW.party_email!=OLD.party_email) BEGIN SELECT RAISE(ABORT,'submitted notice immutable'); END;
+CREATE TRIGGER immutable_change_events_update BEFORE UPDATE ON change_events BEGIN SELECT RAISE(ABORT,'notice history immutable'); END;
+CREATE TRIGGER immutable_change_events_delete BEFORE DELETE ON change_events BEGIN SELECT RAISE(ABORT,'notice history immutable'); END;

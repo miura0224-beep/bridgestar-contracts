@@ -1,0 +1,14 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+const base='https://bridgestar-contract-demo.pages.dev', code=fs.readFileSync('private/demo-access.txt','utf8').trim();
+function client(){let cookies={};return {async req(path,body){const r=await fetch(base+'/api'+path,{method:body===undefined?'GET':'POST',headers:{Origin:base,Cookie:Object.entries(cookies).map(([k,v])=>k+'='+v).join('; '),'Content-Type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});for(const raw of r.headers.getSetCookie()){const [k,...v]=raw.split(';')[0].split('=');cookies[k]=v.join('=')}const data=r.headers.get('content-type')?.includes('json')?await r.json():await r.arrayBuffer();if(!r.ok)throw Error(path+' '+r.status+' '+JSON.stringify(data));return data}}}
+const office=client(),teacher=client();await office.req('/demo/unlock',{code});await teacher.req('/demo/unlock',{code});await office.req('/dev/login',{email:'editor@example.test'});await teacher.req('/dev/login',{email:'approver@example.test'});
+const cases=[['02','student','承認待ち','review'],['03','student','保護者署名待ち','sent'],['04','coach','下書きから作成','draft'],['05','coach','承認待ち','review'],['06','coach','コーチ署名待ち','sent'],['07','student','差し戻しの確認','returned']];
+const existing=await office.req('/admin/contracts');let report=[];
+for(const [n,kind,label,status] of cases){const title=`デモ${n}｜${kind==='student'?'生徒':'コーチ'}｜${label}`;let c=existing.find(c=>c.title===title);if(!c){const input={kind,title,partyName:kind==='student'?`デモ保護者${n}`:`デモコーチ${n}`,partyEmail:`demo${n}@example.test`,templateId:'demo-'+kind,assignedTo:'editor@example.test',startDate:'2026-11-01',endDate:'2027-03-31',studentName:`デモ生徒${n}`,school:'デモ中学校',grade:'中1',address:'東京都デモ区サンプル1-2-3',phone:'09000000000',planId:n==='07'?'b':'starter',reading:n==='03',notes:'動作確認用の架空契約です。実際の契約・請求は発生しません。'};c=await office.req('/admin/contracts',input);
+if(status!=='draft')c=await office.req(`/admin/contracts/${c.id}/action`,{action:'review',version:c.version});
+if(status==='sent'){c=await teacher.req(`/admin/contracts/${c.id}/action`,{action:'approve',version:c.version});c=await office.req(`/admin/contracts/${c.id}/action`,{action:'send',version:c.version});}
+if(status==='returned')c=await teacher.req(`/admin/contracts/${c.id}/action`,{action:'return',version:c.version,reason:'【デモ】開始日を保護者へ確認し、契約を修正して再度承認を依頼してください。'});
+}report.push({title,id:c.id,status:c.status});}
+const apps=await office.req('/admin/applications');if(!apps.some(a=>a.party_email==='demo01@example.test'))await office.req('/admin/applications',{name:'デモ保護者01',email:'demo01@example.test'});
+fs.writeFileSync('private/demo-fixtures.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+const config=await office.req('/config');assert.equal(config.demo,true);assert.equal(config.live,false);

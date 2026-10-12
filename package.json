@@ -1,0 +1,32 @@
+{
+  "name": "bridgestar-contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --ip 127.0.0.1 --port 8792",
+    "types": "wrangler types",
+    "check": "tsc --noEmit",
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "db:local": "wrangler d1 migrations apply bridgestar-contracts --local",
+    "test": "node --import tsx --test tests/*.test.mjs",
+    "build:pages": "node scripts/build-pages.mjs"
+  },
+  "dependencies": {
+    "@pdf-lib/fontkit": "^1.1.1",
+    "hono": "^4.10.8",
+    "jose": "^6.1.0",
+    "pdf-lib": "^1.17.1",
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "latest",
+    "@playwright/test": "latest",
+    "@types/node": "^26.5.1",
+    "esbuild": "^0.28.2",
+    "prettier": "^3.9.6",
+    "tsx": "latest",
+    "typescript": "^5.9.0",
+    "wrangler": "^4.125.0"
+  }
+}

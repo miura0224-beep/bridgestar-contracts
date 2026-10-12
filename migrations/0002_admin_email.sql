@@ -1,0 +1,2 @@
+ALTER TABLE outbox ADD COLUMN provider_id TEXT;
+CREATE TABLE admin_challenges(id TEXT PRIMARY KEY, email TEXT NOT NULL, code_hash TEXT NOT NULL, expires_at TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0, consumed INTEGER NOT NULL DEFAULT 0);

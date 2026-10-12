@@ -1,0 +1,246 @@
+:root {
+  --ink: #233e34;
+  --muted: #62766d;
+  --accent: #305b49;
+  --line: #dfe6df;
+  --bg: #f4f6f1;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font:
+    16px/1.85 -apple-system,
+    BlinkMacSystemFont,
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    sans-serif;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  padding: 18px 4vw;
+}
+a {
+  color: var(--accent);
+  text-underline-offset: 5px;
+}
+.brand {
+  font-size: 25px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.back {
+  margin-left: auto;
+  font-size: 14px;
+}
+.guide {
+  display: grid;
+  grid-template-columns: 235px minmax(0, 880px);
+  gap: 40px;
+  max-width: 1250px;
+  margin: 36px auto;
+  padding: 0 24px;
+}
+aside {
+  position: sticky;
+  top: 106px;
+  align-self: start;
+}
+aside label {
+  font-size: 13px;
+  font-weight: 700;
+}
+input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #b7c8bc;
+  border-radius: 8px;
+  font: inherit;
+  margin: 8px 0 24px;
+}
+nav a {
+  display: block;
+  font-size: 14px;
+  padding: 8px 5px;
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+}
+nav a:hover {
+  background: #e7ede6;
+}
+.aside-note {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 26px;
+}
+.hero {
+  padding: 25px 8px 38px;
+}
+.eyebrow,
+.number {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--muted);
+}
+h1 {
+  font-size: 36px;
+  line-height: 1.5;
+  margin: 20px 0;
+}
+h2 {
+  font-size: 26px;
+  line-height: 1.5;
+  margin: 8px 0 24px;
+}
+h3 {
+  font-size: 18px;
+  margin-top: 25px;
+}
+p {
+  margin: 14px 0;
+}
+section {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 34px 38px;
+  margin-bottom: 24px;
+  scroll-margin-top: 95px;
+}
+li {
+  margin: 11px 0;
+  padding-left: 4px;
+}
+.note {
+  background: #edf3e9;
+  border-left: 4px solid #739067;
+  padding: 18px 22px;
+  margin: 22px 0;
+}
+.note p {
+  margin: 8px 0 0;
+}
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+.flow span {
+  border: 1px solid #abc3b0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+.table-wrap {
+  overflow: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+th,
+td {
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background: #f0f4ed;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.split > div {
+  background: #f4f6f1;
+  padding: 12px 20px;
+  border-radius: 8px;
+}
+details {
+  border-bottom: 1px solid var(--line);
+  padding: 15px 0;
+}
+summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+footer {
+  font-size: 13px;
+  color: var(--muted);
+  padding: 24px 8px 45px;
+}
+[hidden] {
+  display: none !important;
+}
+:focus-visible {
+  outline: 3px solid #82a98e;
+  outline-offset: 3px;
+}
+@media (max-width: 800px) {
+  header {
+    gap: 12px;
+    padding: 14px 18px;
+  }
+  header > span {
+    display: none;
+  }
+  .guide {
+    display: block;
+    margin: 20px auto;
+    padding: 0 16px;
+  }
+  aside {
+    position: static;
+  }
+  nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    margin-bottom: 25px;
+  }
+  .aside-note {
+    display: none;
+  }
+  h1 {
+    font-size: 29px;
+  }
+  section {
+    padding: 25px 21px;
+  }
+  h2 {
+    font-size: 23px;
+  }
+  .split {
+    grid-template-columns: 1fr;
+  }
+  ol,
+  ul {
+    padding-left: 23px;
+  }
+  .hero {
+    padding: 12px 5px 24px;
+  }
+}
